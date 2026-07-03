@@ -1,0 +1,9 @@
+"use client";
+
+import { useState } from "react";
+
+export function NotionSyncPanel() {
+  const [status, setStatus] = useState<"idle" | "checking" | "pending">("idle");
+  function simulate() { setStatus("checking"); setTimeout(() => setStatus("pending"), 900); }
+  return <div className="grid gap-5 xl:grid-cols-[1fr_.7fr]"><article className="panel"><p className="label">Connection Setup</p><h2 className="mt-2 text-2xl font-bold">Notion API 配置</h2><div className="mt-7 space-y-4"><div className="rounded-xl border border-white/8 bg-black/15 p-4"><b className="text-sm">1. NOTION_TOKEN</b><p className="mt-1 text-xs leading-5 text-slate-500">创建 Internal Integration 后，将 token 写入 .env.local。不要使用 NEXT_PUBLIC_ 前缀。</p><code className="mt-3 block rounded-lg bg-black/30 p-3 text-xs text-blue-300">NOTION_TOKEN=ntn_xxx</code></div><div className="rounded-xl border border-white/8 bg-black/15 p-4"><b className="text-sm">2. NOTION_PAGE_ID</b><p className="mt-1 text-xs leading-5 text-slate-500">把 English Learning 根页面分享给 Integration，再复制页面 ID。</p><code className="mt-3 block rounded-lg bg-black/30 p-3 text-xs text-violet-300">NOTION_PAGE_ID=xxxxxxxx</code></div></div><button onClick={simulate} className="gradient-button mt-6">{status === "checking" ? "检查配置中…" : "同步 Notion"}</button></article><article className="panel"><p className="label">Sync Status</p><div className="mt-8 grid place-items-center text-center"><div className={`grid size-24 place-items-center rounded-full border text-3xl ${status === "pending" ? "border-amber-400/30 bg-amber-400/10 text-amber-300" : "border-blue-400/20 bg-blue-400/10 text-blue-300"}`}>{status === "checking" ? "…" : status === "pending" ? "!" : "⟳"}</div><h3 className="mt-5 text-xl font-bold">{status === "pending" ? "等待真实凭据" : status === "checking" ? "正在检查" : "尚未同步"}</h3><p className="mt-2 max-w-xs text-sm leading-6 text-slate-500">MVP 仅展示同步流程。配置环境变量后，再接入 lib/notion.ts 和后台同步任务。</p></div></article></div>;
+}
