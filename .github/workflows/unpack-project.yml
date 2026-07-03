@@ -1,0 +1,24 @@
+name: Unpack Leng Learning Hub source
+
+on:
+  push:
+    paths:
+      - "leng-learning-hub.zip"
+
+permissions:
+  contents: write
+
+jobs:
+  unpack:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Unpack project files
+        run: |
+          unzip -o leng-learning-hub.zip
+          rm leng-learning-hub.zip
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Publish complete Leng Learning Hub source"
+          git push
