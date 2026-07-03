@@ -1,0 +1,39 @@
+@import "tailwindcss";
+
+:root { color-scheme: dark; }
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: #f4f7ff;
+  background:
+    radial-gradient(circle at 12% 8%, rgba(59, 130, 246, .18), transparent 30rem),
+    radial-gradient(circle at 88% 18%, rgba(139, 92, 246, .15), transparent 32rem),
+    #070914;
+  font-family: Arial, Helvetica, sans-serif;
+}
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: .22;
+  background-image: linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: linear-gradient(to bottom, black, transparent 86%);
+}
+button, input { font: inherit; }
+button { cursor: pointer; }
+
+@layer components {
+  .glass { @apply border border-white/10 bg-white/[0.055] shadow-2xl shadow-black/20 backdrop-blur-xl; }
+  .panel { @apply glass rounded-2xl p-5 md:p-6; }
+  .gradient-button { @apply inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-blue-500 to-violet-500 px-4 py-2.5 font-semibold text-white shadow-lg shadow-blue-900/25 transition hover:-translate-y-0.5 hover:shadow-blue-700/30; }
+  .ghost-button { @apply inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 font-semibold text-slate-300 transition hover:border-blue-400/30 hover:bg-blue-400/10 hover:text-white; }
+  .label { @apply text-xs font-bold uppercase tracking-[0.16em] text-blue-300; }
+  .input { @apply w-full rounded-xl border border-white/10 bg-black/20 px-4 py-3 text-white outline-none transition placeholder:text-slate-600 focus:border-blue-400/60 focus:ring-4 focus:ring-blue-500/10; }
+}
+
+@keyframes rise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+.animate-rise { animation: rise .5s both; }
